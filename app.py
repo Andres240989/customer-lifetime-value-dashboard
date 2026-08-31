@@ -106,7 +106,7 @@ with col4:
 # REVENUE BY CHANNEL
 # =========================================================
 
-st.subheader("Revenue por canal")
+st.subheader("Revenue by Channel")
 
 revenue_by_channel = (
     df
@@ -136,7 +136,7 @@ st.plotly_chart(
 # REVENUE BY CUSTOMER SEGMENT
 # =========================================================
 
-st.subheader('Revenue por segmento')
+st.subheader('Revenue by Segment')
 
 revenue_by_segment = (
     filtered_df
@@ -166,7 +166,7 @@ st.plotly_chart(
 # CUSTOMERS BY SEGMENT
 # =========================================================
 
-st.subheader("Número de clientes por segmento")
+st.subheader("Customers by Segment")
 
 customers_by_segment = (
     filtered_df
@@ -219,7 +219,6 @@ if not customer.empty:
     customer_revenue = customer["revenue"].iloc[0]
     customer_cost = customer["cost"].iloc[0]
     customer_net_value = customer["net_value"].iloc[0]
-    customer_score = customer["customer_value_score_net"].iloc[0]
     customer_segment = customer["customer_segment"].iloc[0]
 
     # -----------------------------------------------------
@@ -264,7 +263,7 @@ if not customer.empty:
     if customer_segment == "Low Value":
 
         st.error(
-            "🔴 RETENTION RISK: Low Value Customer"
+            "🔴 RETENTION RISK: Low Value"
         )
 
         st.warning(
@@ -281,7 +280,7 @@ if not customer.empty:
             """
         )
 
-    elif customer_segment == "High Value - Standard Efficiency":
+    elif customer_segment == "High Value":
 
         st.success(
             "🟢 HIGH VALUE CUSTOMER"
@@ -297,7 +296,7 @@ if not customer.empty:
             """
         )
 
-    elif customer_segment == "Cost Efficient - Potential Value":
+    elif customer_segment == "Medium Value":
 
         st.warning(
             "🟡 GROWTH OPPORTUNITY"
@@ -353,19 +352,18 @@ if low_value_count > 0:
         low_value_customers[
             [
                 "customer_id",
-                "revenue",
+                "net_value",
                 "channel",
                 "cost"
                 
             ]
         ]
-        .sort_values("revenue", ascending=False)
+        .sort_values("net_value", ascending=False)
         .rename(
             columns={
                 "customer_id": "Customer ID",
-                "revenue": "Revenue",
+                "net_value": "Net_Value",
                 "channel": "Channel",
-                "customer_value_score_net": "Customer Score",
                 "cost" : "Cost"
             }
         )
